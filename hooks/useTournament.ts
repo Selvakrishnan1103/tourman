@@ -89,7 +89,7 @@ const useTournamentManager = () => {
   const standings: Standings[] = useMemo(() => {
     const stats: { [key: string]: Standings } = {};
     teams.forEach(team => {
-      stats[team.id] = { team, played: 0, wins: 0, losses: 0, scoreDifference: 0, points: 0 };
+      stats[team.id] = { team, played: 0, wins: 0, losses: 0, draws: 0, scoreDifference: 0, points: 0 };
     });
 
     rounds.forEach(round => {
@@ -114,9 +114,11 @@ const useTournamentManager = () => {
             stats[team2.id].points += 2;
             stats[team1.id].losses++;
           } else {
-            // Draw - 1 point each (can be adjusted)
+            // Draw - 1 point each
             stats[team1.id].points += 1;
             stats[team2.id].points += 1;
+            stats[team1.id].draws++;
+            stats[team2.id].draws++;
           }
         }
       });
@@ -161,6 +163,10 @@ const useTournamentManager = () => {
   }, [playoff]);
 
   const updatePlayoffResult = useCallback((matchId: string, score1: number, score2: number) => {
+      if (score1 === score2) {
+          alert('Playoff matches cannot end in a draw. Please determine a winner.');
+          return;
+      }
       setData(prev => {
           if (!prev.playoff) return prev;
           
@@ -172,7 +178,7 @@ const useTournamentManager = () => {
                   const team2 = getPlayoffTeam(m.team2);
                   if(!team1 || !team2) return m;
 
-                  const winner = score1 > score2 ? team1 : (score2 > score1 ? team2 : null);
+                  const winner = score1 > score2 ? team1 : team2;
                   if (m.id === 'playoff-final') {
                       newChampion = winner;
                   }
@@ -188,10 +194,8 @@ const useTournamentManager = () => {
   }, [getPlayoffTeam]);
 
   const resetTournament = useCallback(() => {
-    if (window.confirm('Are you sure you want to reset the entire tournament? This action cannot be undone.')) {
-        setData(initialData);
-        localStorage.removeItem(TOURNAMENT_STORAGE_KEY);
-    }
+    setData(initialData);
+    localStorage.removeItem(TOURNAMENT_STORAGE_KEY);
   }, []);
 
   return {

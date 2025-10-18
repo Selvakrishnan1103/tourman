@@ -1,4 +1,3 @@
-
 export interface Team {
   id: string;
   name: string;
@@ -38,6 +37,7 @@ export interface Standings {
   played: number;
   wins: number;
   losses: number;
+  draws: number;
   scoreDifference: number;
   points: number;
 }

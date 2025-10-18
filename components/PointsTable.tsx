@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useTournament } from '../hooks/useTournament';
 import Card from './common/Card';
@@ -28,6 +27,7 @@ const PointsTable: React.FC = () => {
                     <th className="p-3">Team</th>
                     <th className="p-3 text-center">MP</th>
                     <th className="p-3 text-center">W</th>
+                    <th className="p-3 text-center">D</th>
                     <th className="p-3 text-center">L</th>
                     <th className="p-3 text-center">SD</th>
                     <th className="p-3 text-center">Pts</th>
@@ -40,6 +40,7 @@ const PointsTable: React.FC = () => {
                     <td className="p-3">{s.team.name}</td>
                     <td className="p-3 text-center">{s.played}</td>
                     <td className="p-3 text-center">{s.wins}</td>
+                    <td className="p-3 text-center">{s.draws}</td>
                     <td className="p-3 text-center">{s.losses}</td>
                     <td className="p-3 text-center">{s.scoreDifference > 0 ? `+${s.scoreDifference}` : s.scoreDifference}</td>
                     <td className="p-3 text-center font-bold text-accent">{s.points}</td>
