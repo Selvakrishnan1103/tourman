@@ -1,0 +1,5 @@
+{
+  "name": "Tournament Manager",
+  "description": "A comprehensive tournament management system to handle team registration, round-robin scheduling, playoff brackets, and live-updating points tables. All data is persisted in the browser's localStorage.",
+  "requestFramePermissions": []
+}
